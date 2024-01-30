@@ -1,0 +1,51 @@
+Hanging NES spring test case for foce v displacmenet script
+---------------------- LINE DICTIONARY -----------------------------------------------------
+LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
+(-)       (m)       (kg/m)       (N)        (Pa-s)    (N-m^2)   (-)     (-)    (-)     (-)  
+bungee    0.0001       0.0        1e4        0          0     0     0    0     0  # springs or bungees that hold the NES mass in plane and provide a nonlinear stiffness
+---------------------- ROD TYPES -----------------------------------------------------
+RodType    Diam    MassDenInAir   Can     Cat    Cdn     Cdt 
+(-)         (m)      (kg/m)       (-)     (-)    (-)     (-)  
+Connector  0.176     77.3        0.0     0.0    0     0.00
+---------------------------- BODIES -----------------------------------------------------
+ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
+(#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
+1       Fixed    0      0      0     0       0      0      0     0    0        0       0      0
+---------------------- RODS ----------------------------------------
+RodID  RodType   Attachment    Xa    Ya    Za       Xb     Yb   Zb    NumSegs  Flags/Outputs
+(#)     (name)     (#/key)     (m)   (m)   (m)      (m)    (m)  (m)     (-)      (-)   
+1       Connector   Body1     -1      0    -1      1   0   -1       1       p    
+---------------------- NODE PROPERTIES -----------------------------------------------------
+Node      Type      X        Y         Z        M       V        CdA   Ca 
+(-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
+1         Free     0        0          -2     0.05       0           0    0  # this is the NES mass
+---------------------- LINE PROPERTIES -----------------------------------------------------
+Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
+(-)       (-)        (m)       (-)       (-)       (-)        (-)
+1        bungee      R1a        1        1         1         p 
+2        bungee      R1b        1        1         1         p
+---------------------- SOLVER OPTIONS ----------------------------------------
+2          writeLog 
+0.00001    dtM          - time step to use in mooring integration
+1.5e0      kb           - bottom stiffness  seabed contact
+1e0        cb           - bottom damping  
+50         WtrDpth      - water depth
+3.5        ICDfac       - factor by which to scale drag coefficients during dynamic relaxation IC gen
+0.001      ICthresh     - threshold for IC convergence
+0.0        TmaxIC       - threshold for IC convergence
+0.01       dtOut 
+0.0        WtrDnsty
+---------------------- OUTPUT -----------------------------------------
+Point1PX
+Point1PY
+Point1PZ
+Point1FX
+Point1FY
+Point1FZ
+Rod1NAPX
+Rod1NAPY
+Rod1NAPZ
+Rod1NBPX
+Rod1NBPY
+Rod1NBPZ
+--------------------- need this line ------------------

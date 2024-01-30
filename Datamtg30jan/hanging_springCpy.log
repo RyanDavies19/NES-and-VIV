@@ -1,0 +1,55 @@
+MoorDyn v2 log file with output level MSG at 'MooringTest/hanging_springCpy.log'
+Generated entities:
+	nLineTypes  = 1
+	nRodTypes   = 1
+	nPoints     = 1
+	nBodies     = 1
+	nRods       = 1
+	nLines      = 2
+	nFails      = 0
+	nFreeBodies = 0
+	nFreeRods   = 0
+	nFreePoints  = 1
+	nCpldBodies = 0
+	nCpldRods   = 0
+	nCpldPoints = 0
+Time integrator = 2nd order Runge-Kutta
+No Waves or Currents, or set externally
+Creating mooring system...
+Initialized Rod 1
+  - Line1:
+    ID: 1
+    UnstrLen: 1
+    N   : 1
+    d   : 0.0001
+    rho : 0
+    E   : 1.27324e+12
+    EI  : 0
+    BAin: 0
+    Can : 0
+    Cat : 0
+    Cdn : 0
+    Cdt : 0
+    ww_l: 0
+WRN source/Line.cpp:504 initialize(): Catenary initial profile failed for Line 1, initalizing as linear 
+Initialized Line 1
+  - Line2:
+    ID: 2
+    UnstrLen: 1
+    N   : 1
+    d   : 0.0001
+    rho : 0
+    E   : 1.27324e+12
+    EI  : 0
+    BAin: 0
+    Can : 0
+    Cat : 0
+    Cdn : 0
+    Cdt : 0
+    ww_l: 0
+WRN source/Line.cpp:504 initialize(): Catenary initial profile failed for Line 2, initalizing as linear 
+Initialized Line 2
+Finalizing ICs using dynamic relaxation (3.5X normal drag)
+Fairlead tensions converged
+Remaining error after 0 s = 0% on line 0
+No Waves or Currents, or set externally
