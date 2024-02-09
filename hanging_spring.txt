@@ -2,11 +2,11 @@ Hanging NES spring test case for foce v displacmenet script
 ---------------------- LINE DICTIONARY -----------------------------------------------------
 LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
 (-)       (m)       (kg/m)       (N)        (Pa-s)    (N-m^2)   (-)     (-)    (-)     (-)  
-bungee    0.01       0.01        1e4        0          0     1.0     0.0    1.2     0.1  # springs or bungees that hold the NES mass in plane and provide a nonlinear stiffness
+bungee    0.0001       0.0        2.56e8        0          0     0     0    0     0  # springs or bungees that hold the NES mass in plane and provide a nonlinear stiffness
 ---------------------- ROD TYPES -----------------------------------------------------
 RodType    Diam    MassDenInAir   Can     Cat    Cdn     Cdt 
 (-)         (m)      (kg/m)       (-)     (-)    (-)     (-)  
-Connector  0.176     77.3        1.0     0.0    1.2     0.008
+Connector  0.176     77.3        0.0     0.0    0     0.00
 ---------------------------- BODIES -----------------------------------------------------
 ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
 (#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
@@ -14,16 +14,16 @@ ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      V
 ---------------------- RODS ----------------------------------------
 RodID  RodType   Attachment    Xa    Ya    Za       Xb     Yb   Zb    NumSegs  Flags/Outputs
 (#)     (name)     (#/key)     (m)   (m)   (m)      (m)    (m)  (m)     (-)      (-)   
-1       Connector   Body1     -1      0    -1      1   0   -1       1       p    
+1       Connector   Body1     -0.5      0    -0.017      0.5   0   -0.017       1       p
 ---------------------- NODE PROPERTIES -----------------------------------------------------
 Node      Type      X        Y         Z        M       V        CdA   Ca 
 (-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
-1         Free     0        0          -2     0.05       0           0    0  # this is the NES mass
+1         Free     0        0          0.5    16.64       0           0    0  # this is the NES mass
 ---------------------- LINE PROPERTIES -----------------------------------------------------
 Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
 (-)       (-)        (m)       (-)       (-)       (-)        (-)
-1        bungee      R1a        1        1         1         p 
-2        bungee      R1b        1        1         1         p
+1        bungee      R1a        1        0.5003      1         p
+2        bungee      R1b        1        0.5003      1         p
 ---------------------- SOLVER OPTIONS ----------------------------------------
 2          writeLog 
 0.00001    dtM          - time step to use in mooring integration
