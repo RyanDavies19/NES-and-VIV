@@ -1,0 +1,51 @@
+---------------------- LINE DICTIONARY -----------------------------------------------------
+LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
+(-)       (m)       (kg/m)       (N)        (Pa-s)    (N-m^2)   (-)     (-)    (-)     (-)  
+bendstiff 0.176     77.3        751e6       -0.8       60000    1.0     0.0    1.2     0.008    
+cable     0.176     77.3        751e6       -0.8       11710    1.0     0.0    1.2     0.008    
+buoyancy  0.559     184.5       751e6       -0.8       11710    1.0     0.0    1.2     0.008 
+limp      0.176     77.3        751e4       -0.8          0     1.0     0.0    1.2     0.1
+bungee    0.0001       0.0        1e8        1e3     0     0     0    0     0  # springs or bungees that hold the NES mass in plane and provide a nonlinear stiffness
+---------------------- ROD TYPES -----------------------------------------------------
+RodType    Diam    MassDenInAir   Can     Cat    Cdn     Cdt 
+(-)         (m)      (kg/m)       (-)     (-)    (-)     (-)  
+Connector  0.176     77.3        0.0     0.0    0     0.00
+---------------------------- BODIES -----------------------------------------------------
+ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
+(#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
+1       vessel    0      0      0     0       0      0      0     0    0        0       0      0
+---------------------- RODS ----------------------------------------
+RodID  RodType   Attachment   Xa    Ya    Za     Xb    Yb   Zb  NumSegs  Flags/Outputs
+(#)     (name)     (#/key)     (m)   (m)   (m)    (m)   (m)  (m)    (-)      (-)   
+1       Connector   Body1     0      0   -2     0   0   -3      2       p  
+2       Connector   Free      0  0   -6     0   0   -6.1  0       p     
+3       Connector   Free      0    0     -17.9     0   0  -18      0       p    # this is a rod that's inserted along the cable to attached the NES to
+---------------------- NODE PROPERTIES -----------------------------------------------------
+Node      Type      X        Y         Z        M       V        CdA   Ca 
+(-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
+1         Fixed     0     0           -50       0       0           0    0
+---------------------- LINE PROPERTIES -----------------------------------------------------
+Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
+(-)       (-)        (m)       (-)       (-)       (-)        (-)
+1      bendstiff     R1b       R2a       5          5          p
+2        cable       R3b        1        25         33         p #25
+3        cable       R2b        R3a      13         13        p
+---------------------- SOLVER OPTIONS ----------------------------------------
+2          writeLog 
+0.00001    dtM          - time step to use in mooring integration
+1.5e5      kb           - bottom stiffness  seabed contact
+1e4        cb           - bottom damping  
+50         WtrDpth      - water depth
+2.0        ICDfac       - factor by which to scale drag coefficients during dynamic relaxation IC gen
+0.001      ICthresh     - threshold for IC convergence
+0.0        TmaxIC       - threshold for IC convergence
+0.0001       dtOut 
+1025.0      WtrDnsty
+RK4 Scheme
+---------------------- OUTPUT -----------------------------------------
+AnchTen1
+FairTen1
+Body1Fx
+Body1Fy
+Body1Fz
+--------------------- need this line ------------------
