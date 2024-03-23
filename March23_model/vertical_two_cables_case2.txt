@@ -1,0 +1,155 @@
+---------------------- LINE DICTIONARY -----------------------------------------------------
+LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
+(-)       (m)       (kg/m)       (N)        (Pa-s)    (N-m^2)   (-)     (-)    (-)     (-)  
+bendstiff 0.106     17.3        851e6       -0.8       60000    1.0     0.0    1.2     0.008    
+cable     0.106     17.3        851e6       -0.8       11710    1.0     0.0    1.2     0.008       
+buoyancy  0.559     184.5       851e6       -0.8       11710    1.0     0.0    1.2     0.008 
+limp      0.176     47.3        751e4       -0.8          0     1.0     0.0    1.2     0.1
+bungee    0.0001       0.0        1e8        1e3     0     0     0    0     0  # springs or bungees that hold the NES mass in plane and provide a nonlinear stiffness
+---------------------- ROD TYPES -----------------------------------------------------
+RodType    Diam    MassDenInAir   Can     Cat    Cdn     Cdt 
+(-)         (m)      (kg/m)       (-)     (-)    (-)     (-)  
+Connector  0.106     17.3        0.0     0.0    0     0.00
+Connector1  0.106     31.3        0.0     0.0    0     0.00
+---------------------------- BODIES -----------------------------------------------------
+ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
+(#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
+1       vessel    0      0      0     0       0      0      0     0    0        0       0      0
+2      vessel    1      0      0     0       0      0      0     0    0        0       0      0
+---------------------- RODS ----------------------------------------
+RodID  RodType   Attachment   Xa    Ya    Za     Xb    Yb   Zb  NumSegs  Flags/Outputs
+(#)     (name)     (#/key)     (m)   (m)   (m)    (m)   (m)  (m)    (-)      (-)   
+1       Connector   Body1     0     0   -2        0   0   -3           2       p  
+2       Connector   Free      0     0   -6        0   0   -6.1         0       p     
+3       Connector   Free      0     0   -10.0009  0   0  -10.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+4       Connector   Free      0     0   -13.0009  0   0  -13.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+5       Connector   Free      0     0   -17.0009  0   0  -17.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+6       Connector   Body2     1     0   -2        1   0  -3            2       p  
+7       Connector   Free      1    0   -6        1  0  -6.1          0       p     
+8       Connector1  Free      1    0   -10.0009  1  0  -10.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+9       Connector1  Free      1    0   -13.0009  1  0  -13.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+10      Connector1  Free      1    0   -17.0009  1  0  -17.9991      1       p    # this is a rod that's inserted along the cable to attached the NES to
+---------------------- NODE PROPERTIES -----------------------------------------------------
+Node      Type      X        Y         Z        M       V        CdA   Ca 
+(-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
+1         Fixed     0     0           -25       0       0           0    0
+2         free      0      0       -10.5     14       0           0    0  # this is the NES mass
+3         free      0      0       -13.5     14       0           0    0  # this is the NES mass
+4         free      0      0       -17.5     14       0           0    0  # this is the NES mass
+5         Fixed     1     0           -25       0       0           0    0
+---------------------- LINE PROPERTIES -----------------------------------------------------
+Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
+(-)       (-)        (m)       (-)       (-)       (-)        (-)
+1      bendstiff     R1b       R2a       5          5          p 
+2        cable       R5b        1        8.001         13         p #25
+3        cable       R2b        R3a      2         2        p
+4        cable       R3b        R4a      2         2        p
+5        cable       R4b        R5a      2         2        p
+6        bungee      R3a        2        0.5         1         ptc  # single-element bungees holding NES mass to Rod ends
+7        bungee      R3b        2        0.5         1         ptc
+8        bungee      R4a        3        0.5         1         ptc  # single-element bungees holding NES mass to Rod ends
+9        bungee      R4b        3        0.5         1         ptc
+10        bungee      R5a        4        0.5         1         ptc  # single-element bungees holding NES mass to Rod ends
+11        bungee      R5b        4        0.5         1         ptc
+12      bendstiff     R6b       R7a       5          5          p
+13        cable       R10b        5        8.001         13         p #25
+14        cable       R7b        R8a      2         2        p
+15        cable       R8b        R9a      2         2        p
+16        cable       R9b        R10a      2         2        p
+---------------------- SOLVER OPTIONS ----------------------------------------
+2          writeLog 
+0.00001    dtM          - time step to use in mooring integration
+1.5e5      kb           - bottom stiffness  seabed contact
+1e4        cb           - bottom damping  
+50         WtrDpth      - water depth
+2.0        ICDfac       - factor by which to scale drag coefficients during dynamic relaxation IC gen
+0.001      ICthresh     - threshold for IC convergence
+1.0        TmaxIC       - threshold for IC convergence
+0.0001       dtOut 
+1025.0      WtrDnsty
+RK4 Scheme
+---------------------- OUTPUT -----------------------------------------
+AnchTen1
+FairTen1
+POINT2PX
+POINT2PY
+POINT2PZ
+POINT2FX
+POINT2FY
+POINT2FZ
+Point1PX
+Point1PY
+Point1PZ
+Point1FX
+Point1FY
+Point1FZ
+Body1Px
+ROD3Px
+ROD3Py
+ROD3Pz
+ROD3NAPX
+ROD3NAPY
+ROD3NAPZ
+ROD3NBPX
+ROD3NBPY
+ROD3NBPZ
+ROD2NAPX
+ROD2NAPY
+ROD2NAPZ
+ROD2NBPX
+ROD2NBPY
+ROD2NBPZ
+LINE3N17PX
+LINE4N1PX
+LINE4N2PX
+Body1Fx
+Body1Fy
+Body1Fz
+POINT4PY
+POINT4PZ
+POINT4FX
+POINT4FY
+POINT4FZ
+POINT2PX
+POINT2PY
+POINT2PZ
+POINT2FX
+POINT2FY
+POINT2FZ
+POINT3PX
+POINT3PY
+POINT3PZ
+POINT3FX
+POINT3FY
+POINT3FZ
+ROD2NAPX
+ROD2NAPY
+ROD2NAPZ
+ROD2NBPX
+ROD2NBPY
+ROD2NBPZ
+ROD3NAPX
+ROD3NAPY
+ROD3NAPZ
+ROD3NBPX
+ROD3NBPY
+ROD3NBPZ
+ROD4NAPX
+ROD4NAPY
+ROD4NAPZ
+ROD4NBPX
+ROD4NBPY
+ROD4NBPZ
+ROD5NAPX
+ROD5NAPY
+ROD5NAPZ
+ROD5NBPX
+ROD5NBPY
+ROD5NBPZ
+POINT4PX
+POINT4PY
+POINT4PZ
+POINT4FX
+POINT4FY
+POINT4FZ
+--------------------- need this line ------------------
