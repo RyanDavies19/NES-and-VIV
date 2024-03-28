@@ -1,0 +1,1 @@
+Users should only modify and run range_mod_infiles.py. MD_file_helpers.py is the MoorPy struture in a single file that provides the load and unload capabilities as well as structure that allows for mooring file parameters to be edited.
