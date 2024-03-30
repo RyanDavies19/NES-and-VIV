@@ -1122,7 +1122,7 @@ class helpers():
 class Line():
     '''A class for any mooring line that consists of a single material'''
 
-    def __init__(self, mooringSys, num, L, lineType, nSegs=100, outs='p', rod_attachment = '', cb=0, isRod=0, attachments = [0,0]):
+    def __init__(self, mooringSys, num, L, lineType, nSegs=100, outs='p', cb=0, isRod=0, rod_attachment = '', attachments = [0,0]):
         '''Initialize Line attributes
 
         Parameters
@@ -1167,6 +1167,7 @@ class Line():
         
         self.outs = outs
         self.rod_attachment = rod_attachment
+        self.lr_attachment = ['','']
         self.attached     = []         # ID numbers of any Lines attached to the Rod
         self.attachedEndB = []         # specifies which end of the line is attached (1: end B, 0: end A)
 
@@ -2106,7 +2107,6 @@ class Line():
         None.
 
         '''
-    
         self.attached.append(lineID)  
         self.attachedEndB.append(endB)
 
@@ -3414,8 +3414,10 @@ class System():
                                 if numA <= len(self.rodList) and numA > 0:
                                     if entries[2][-1] in ['a','A']:
                                         self.rodList[numA-1].attachLine(num, 0)  # add line (end A, denoted by 0) to rod >>end A, denoted by 0<<
+                                        self.lineList[num-1].lr_attachment[0] = 'a'
                                     elif entries[2][-1] in ['b','B']: 
                                         self.rodList[numA-1].attachLine(num, 0)  # add line (end A, denoted by 0) to rod >>end B, denoted by 1<<
+                                        self.lineList[num-1].lr_attachment[0] = 'b'
                                     else:
                                         raise ValueError(f"Rod end (A or B) must be specified for line {num} end A attachment. Input was: {entries[2]}")
                                 else:
@@ -3433,8 +3435,10 @@ class System():
                                 if numB <= len(self.rodList) and numB > 0:
                                     if entries[3][-1] in ['a','A']:
                                         self.rodList[numB-1].attachLine(num, 1)  # add line (end B, denoted by 1) to rod >>end A, denoted by 0<<
+                                        self.lineList[num-1].lr_attachment[1] = 'a'
                                     elif entries[3][-1] in ['b','B']: 
                                         self.rodList[numB-1].attachLine(num, 1)  # add line (end B, denoted by 1) to rod >>end B, denoted by 1<<
+                                        self.lineList[num-1].lr_attachment[1] = 'b'
                                     else:
                                         raise ValueError(f"Rod end (A or B) must be specified for line {num} end B attachment. Input was: {entries[2]}")
                                 else:
@@ -3692,13 +3696,13 @@ class System():
                         elif line_pos == 1:                                                     #If the B side of this line is connected to the point
                             connection_points[line -1,1] = str(point_ind)                                #Save as a Fairlead node
                             #connection_points[line -1,1] = self.pointList.index(point) + 1     
-                for rod_ind,rod in enumerate(self.rodList,start = 1):                    #Loop through all the rods
+                for rod_ind,rod in enumerate(self.rodList,start = 1): #Loop through all the rods                         
                     for (line,line_pos) in zip(rod.attached,rod.attachedEndB):          #Loop through all the lines #s connected to this rod
                         if line_pos == 0:                                                      #If the A side of this line is connected to the rod
-                            connection_points[line -1,0] = ('r'+str(rod_ind)+'a')                                 #Save as as an Anchor Node
+                            connection_points[line -1,0] = ('r'+str(rod_ind)+self.lineList[line-1].lr_attachment[0])                                 #Save as as an Anchor Node
                         elif line_pos == 1:                                                     #If the B side of this line is connected to the rod
-                            connection_points[line -1,1] = ('r'+str(rod_ind)+'b')                                 #Save as a Fairlead node
-                
+                            connection_points[line -1,1] = ('r'+str(rod_ind)+self.lineList[line-1].lr_attachment[1])                                 #Save as a Fairlead node
+
                 print('attempting to write '+fileName +' for MoorDyn v'+str(MDversion))
                 #Array to add strings to for each line of moordyn input file
                 L = []                   

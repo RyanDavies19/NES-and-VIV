@@ -83,7 +83,7 @@ if __name__ == "__main__":
     parent_file.unload(fileName=new_name, MDversion=2)
     test_files.append(new_name)
     test_files.append(path+root+extension)
-
+    exit()
 
     # run MD for all the files (one loop, multiple systems running in simultaneously)
     
