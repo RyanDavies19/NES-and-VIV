@@ -46,7 +46,7 @@ def sin (period = 150, dt = 0.001, A = 0.1, axis = 0, dof = 6, x_initial = np.ar
 
     return x, xd
 
-rootname = 'SDOF_Rod_1bng_test_d0.05'
+rootname = 'SDOF_Rod_1bng_9_d0.05'
 extension = '.txt'
 path = ''
 tMax = 100# max time for running time sereies
