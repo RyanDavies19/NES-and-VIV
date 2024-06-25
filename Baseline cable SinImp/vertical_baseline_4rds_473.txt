@@ -1,0 +1,54 @@
+Mooring line data file for MoorDyn in Lines.dll
+---------------------- LINE DICTIONARY -----------------------------------------------------
+LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
+(-)       (m)       (kg/m)       (N)        (N-s/-)    (N-m^2)   (-)     (-)    (-)     (-)
+bendstiff 0.076     4.73        9e6       -0.8       60000    1.0     0.0    1.2     0.008
+cable     0.076     4.73        9e6       -0.8       11710    1.0     0.0    1.2     0.008
+bungee    0.5642    0.0001      746.93     148         0      0      0     0      0  # springs or bungees that hold the TMD mass in plane and provide a nonlinear stiffness
+---------------------- ROD TYPES -----------------------------------------------------
+RodType    Diam    MassDenInAir   Can     Cat    Cdn     Cdt 
+(-)         (m)      (kg/m)       (-)     (-)    (-)     (-)  
+Connector   0.076     4.73        1.0     0.0    1.2     0.008
+Connector1   0.076    4.73        1.0     0.0    1.2     0.008
+---------------------------- BODIES -----------------------------------------------------
+ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
+(#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
+1       vessel    0      0      0     0       0      0      0     0    0        0       0      0
+---------------------- RODS ----------------------------------------
+RodID  RodType   Attachment   Xa    Ya    Za     Xb    Yb   Zb  NumSegs  Flags/Outputs
+(#)     (name)     (#/key)     (m)   (m)   (m)    (m)   (m)  (m)    (-)      (-)
+1       Connector   Body1     0     0   -1        0   0  -2          2       -
+2       Connector   Free      0     0   -3.0005   0   0  -3.9995     1       -
+3       Connector   Free      0     0   -6.0005   0   0  -6.9995     1       -
+4       Connector1  Free      0     0   -12.0005  0   0  -12.9995    1       -    # this is a rod that's inserted along the cable to attached the TMD to
+5       Connector   Free      0     0   -14.0005  0   0  -14.9995    1       -
+---------------------- NODE PROPERTIES -----------------------------------------------------
+Node      Type      X        Y         Z        M       V        CdA   Ca 
+(-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
+1         Fixed     0       0         -25       0       0         0    0
+---------------------- LINE PROPERTIES -----------------------------------------------------
+Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
+(-)       (-)        (m)       (-)       (-)       (-)        (-)
+1      bendstiff     R1b        R2a      2.41      5          tp
+2        cable       R2b        R3a      2         2          tpv
+3        cable       R3b        R4a      4.75      5          tpv
+4        cable       R4b        R5a      2         2          tpv
+5        cable       R5b        1        7.5       13         tpv #25
+---------------------- SOLVER OPTIONS ----------------------------------------
+2          writeLog 
+0.0001     dtM          - time step to use in mooring integration
+1.5e5      kb           - bottom stiffness  seabed contact
+1e4        cb           - bottom damping  
+0          WtrDpth      - water depth
+2.0        ICDfac       - factor by which to scale drag coefficients during dynamic relaxation IC gen
+0.001      ICthresh     - threshold for IC convergence
+1.0        TmaxIC       - threshold for IC convergence
+0.0001     dtOut
+0          WtrDnsty
+RK4        tScheme
+---------------------- OUTPUT -----------------------------------------
+FairTen1
+BODY1PX
+BODY1PY
+BODY1PZ
+--------------------- need this line ------------------
