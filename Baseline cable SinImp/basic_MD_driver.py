@@ -39,17 +39,18 @@ def sin (period = 150, dt = 0.001, A = 0.1, axis = 0, dof = 6, x_initial = np.ar
 
     return x, xd
 
+# settings
 rootname = 'vertical_baseline_4rds_473'
 extension = '.txt'
 path = ''
 tMax = 25# max time for running time sereies
 dtC = 0.0001 # coupling timestep
 time = np.arange(0, tMax, dtC) # time series
-dof = 6 # size of state vector (# dof * # coupled objects)
-vector_size = dof * 1 # 1 6dof coupled object
+dof = 6 # coupled object dof
+vector_size = dof * 1 # num coupled objects
 
 # currently array of 0 state vectors for every time series. Change this for base excitation
-size = (len(time), 6) 
+size = (len(time), vector_size) 
 x = np.zeros(size) 
 xd = np.zeros(size)
 # end changes

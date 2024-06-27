@@ -39,24 +39,24 @@ def sin(period=0.5, A=0.01, axis=0, dof=12, x_initial=np.array([0, 0, 0, 0, 0, 0
     return x, xd
 
 
-# Example usage
+# settings
 rootname = 'vertical_TMD_Rod_1bng_10'
 extension = '.txt'
 path = ''
 tMax = 25# max time for running time series
 dtC = 0.0001  # coupling timestep
 time = np.arange(0, tMax, dtC)  # time series
-dof = 12  # size of state vector (# dof * # coupled objects)
-vector_size = dof * 1  # 1 6dof coupled object
+dof = 6  # coupled object dof
+vector_size = dof * 2  # num coupled objects
 
 # Initialize x and xd
-size = (len(time), 12)
+size = (len(time), vector_size)
 x = np.zeros(size)
 xd = np.zeros(size)
 
 # Call the modified sin function with 50% activity period, for example
-x, xd = sin(period=0.5, A=0.1, axis=0, dof=dof, x_initial=np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), vector_size=vector_size,
-            time=time, active_percentage=2)
+x, xd = sin(period=0.5, A=0.1, axis=0, dof=dof, x_initial=np.array([0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0]), vector_size=vector_size,
+            time=time, active_percentage=2) # FIXED: x_inital here needs to reflect the 6 DOF location of each body (from MD input file). Otherwise both are on top of eachother at 0,0,0
 
 # Creating a new figure for the displacement vs time plot
 plt.figure(figsize=(12, 7))
