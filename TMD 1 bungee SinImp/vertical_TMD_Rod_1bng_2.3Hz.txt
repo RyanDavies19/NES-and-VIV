@@ -1,4 +1,4 @@
-Mooring line data file for MoorDyn in Lines.dll
+Mooring line data file for MoorDyn in Lines.dll. In Air
 ---------------------- LINE DICTIONARY -----------------------------------------------------
 LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
 (-)       (m)       (kg/m)       (N)        (N-s/-)    (N-m^2)   (-)     (-)    (-)     (-)
@@ -32,7 +32,7 @@ RodID  RodType   Attachment   Xa    Ya    Za     Xb    Yb   Zb  NumSegs  Flags/O
 Node      Type      X        Y         Z        M       V        CdA   Ca 
 (-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
 1         Fixed     0       0         -25       0       0         0    0
-2         free      0.0001    0      -12.5     4.73     0         0    0
+2         free      0.0001    0      -12.5     4.73     0         0    0  # mass is hanging vertically dow from rod 4 end a
 3         Fixed     1       0         -25       0       0         0    0
 ---------------------- LINE PROPERTIES -----------------------------------------------------
 Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
