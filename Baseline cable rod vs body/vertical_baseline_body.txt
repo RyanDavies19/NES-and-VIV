@@ -1,0 +1,45 @@
+Simplified baseline: You may need to adjust Line UnstrLen to match pretension from before
+---------------------- LINE DICTIONARY -----------------------------------------------------
+LineType  Diam    MassDenInAir   EA        cIntDamp     EI      Can     Cat    Cdn     Cdt 
+(-)       (m)       (kg/m)       (N)        (N-s/-)    (N-m^2)   (-)     (-)    (-)     (-)
+cable     0.076     4.73        9e6       -0.8          11710    1.0     0.0    1.2     0.008
+---------------------------- BODIES -----------------------------------------------------
+ID   Attachment  X0     Y0    Z0     r0      p0     y0     Mass  CG*   I*      Volume   CdA*   Ca
+(#)     (-)      (m)    (m)   (m)   (deg)   (deg)  (deg)   (kg)  (m)  (kg-m^2)  (m^3)   (m^2)  (-)
+1       vessel    0      0      0     0       0      0      0     0    0        0       0      0
+2       free      0      0     -12.5  0       0      0      0     0    9.46     0    0.00|8.00      0  # connection point for TMD. This could be replaced with a free point, but the body structure allows us to put in an NES later
+---------------------- NODE PROPERTIES -----------------------------------------------------
+Node      Type      X        Y         Z        M       V        CdA   Ca 
+(-)       (-)      (m)      (m)       (m)      (kg)    (m^3)     (m2)  () 
+1         Fixed     0        0        -25       0       0         0    0  # anchor
+2         body2     0        0          0       0       0         0    0  # TMD attachment at center of body 2
+3         body1     0        0          0       0       0         0    0  # fairlead
+---------------------- LINE PROPERTIES -----------------------------------------------------
+Line     LineType  NodeA     NodeB       UnstrLen  NumSegs    Flags/Outputs
+(-)       (-)        (m)       (-)       (-)       (-)        (-)
+1        cable       1          2         12.27     12        tpv  # this UnstrLen matches the cable length from before (rods + segments)
+2        cable       2          3         12.27     12        tpv  # this UnstrLen matches the cable length from before (rods + segments)
+---------------------- SOLVER OPTIONS ----------------------------------------
+2          writeLog 
+0.0001     dtM          - time step to use in mooring integration
+1.5e5      kb           - bottom stiffness  seabed contact
+1e4        cb           - bottom damping  
+25         WtrDpth      - water depth
+2.0        ICDfac       - factor by which to scale drag coefficients during dynamic relaxation IC gen
+0.001      ICthresh     - threshold for IC convergence
+3.0        TmaxIC       - threshold for IC convergence
+0.0001     dtOut
+1025       WtrDnsty
+RK4         tScheme
+---------------------- OUTPUT -----------------------------------------
+FairTen2
+BODY1PX
+BODY1PY
+BODY1PZ
+BODY2PX
+BODY2PY
+BODY2PZ
+BODY2RX
+BODY2RY
+BODY2RZ
+--------------------- need this line ------------------
